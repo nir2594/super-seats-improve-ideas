@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-commerce Customer Growth Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f5f4f0;
+    color: #1a1a18;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 2.5rem 1.25rem 4rem;
+  }
+
+  /* Hero */
+  .hero {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+    background: #fff;
+    border: 1px solid #e4e2da;
+    border-radius: 16px;
+    padding: 1.75rem 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero-icon { font-size: 48px; flex-shrink: 0; }
+  .hero h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+  .hero p { font-size: 14px; color: #6b6b66; }
+  .badge {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    background: #e6f1fb;
+    color: #0c447c;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  /* Metrics */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+  .metric {
+    background: #fff;
+    border: 1px solid #e4e2da;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    text-align: center;
+  }
+  .metric .num { font-size: 22px; font-weight: 600; display: block; }
+  .metric .lbl { font-size: 12px; color: #6b6b66; display: block; margin-top: 2px; }
+  .metric.green .num { color: #3b6d11; }
+
+  /* Pillars */
+  .pillar {
+    background: #fff;
+    border: 1px solid #e4e2da;
+    border-radius: 14px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+
+  .pillar-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 1.1rem 1.5rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background .15s;
+  }
+  .pillar-header:hover { background: #fafaf7; }
+
+  .pillar-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+
+  .pillar-meta { flex: 1; }
+  .pillar-meta h3 { font-size: 15px; font-weight: 600; }
+  .pillar-meta span { font-size: 12px; color: #6b6b66; }
+
+  .chevron {
+    font-size: 18px; color: #9b9b95;
+    transition: transform .2s;
+    flex-shrink: 0;
+  }
+  .chevron.open { transform: rotate(180deg); }
+
+  .pillar-body {
+    display: none;
+    padding: 0 1.5rem 1.25rem;
+    border-top: 1px solid #e4e2da;
+  }
+  .pillar-body.open { display: block; }
+
+  /* Tips */
+  .tip {
+    display: flex;
+    gap: 12px;
+    padding: .875rem 0;
+    border-bottom: 1px solid #f0ede6;
+  }
+  .tip:last-child { border-bottom: none; }
+
+  .tip-num {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    flex-shrink: 0; margin-top: 3px;
+  }
+
+  .tip-content h4 { font-size: 13.5px; font-weight: 600; margin-bottom: 3px; }
+  .tip-content p { font-size: 13px; color: #5a5a55; line-height: 1.65; }
+
+  .effort {
+    display: inline-block;
+    font-size: 10px; font-weight: 600;
+    padding: 2px 9px; border-radius: 12px;
+    margin-top: 6px; letter-spacing: .2px;
+  }
+  .effort.quick  { background: #eaf3de; color: #3b6d11; }
+  .effort.medium { background: #faeeda; color: #854f0b; }
+  .effort.invest { background: #faece7; color: #993c1d; }
+
+  /* Action checklist */
+  .actions {
+    background: #fff;
+    border: 1px solid #e4e2da;
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  .actions h3 { font-size: 15px; font-weight: 600; margin-bottom: 1rem; }
+
+  .action-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: .5rem 0;
+    border-bottom: 1px solid #f0ede6;
+  }
+  .action-item:last-of-type { border-bottom: none; }
+
+  .action-item input[type="checkbox"] {
+    width: 17px; height: 17px; cursor: pointer;
+    accent-color: #185fa5; flex-shrink: 0;
+  }
+  .action-item label { font-size: 13.5px; cursor: pointer; color: #3a3a36; }
+  .action-item input:checked + label {
+    text-decoration: line-through;
+    color: #9b9b95;
+  }
+
+  .cta-row { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid #f0ede6; }
+  .cta-row p { font-size: 13px; color: #6b6b66; margin-bottom: .6rem; }
+  .cta-btn {
+    display: inline-block;
+    font-size: 13px; font-weight: 500;
+    background: #1a1a18; color: #fff;
+    border: none; border-radius: 8px;
+    padding: .5rem 1.1rem;
+    cursor: pointer; text-decoration: none;
+    transition: background .15s;
+  }
+  .cta-btn:hover { background: #333330; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 2.5rem;
+    font-size: 12px;
+    color: #9b9b95;
+  }
+
+  @media (max-width: 520px) {
+    .metrics { grid-template-columns: 1fr 1fr; }
+    .metrics .metric:last-child { grid-column: span 2; }
+    .hero { flex-direction: column-reverse; gap: .75rem; }
+    .hero-icon { font-size: 36px; }
+    .pillar-header { padding: .9rem 1.1rem; }
+    .pillar-body { padding: 0 1.1rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="hero">
+    <div>
+      <h1>Grow your customer base</h1>
+      <p>A focused playbook for retail &amp; e-commerce businesses</p>
+      <span class="badge">5 pillars &nbsp;·&nbsp; 15 tactics</span>
+    </div>
+    <div class="hero-icon">🛒</div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric">
+      <span class="num">1–3%</span>
+      <span class="lbl">avg e-commerce conversion rate</span>
+    </div>
+    <div class="metric">
+      <span class="num">5–7×</span>
+      <span class="lbl">cost to acquire vs retain</span>
+    </div>
+    <div class="metric green">
+      <span class="num">+29%</span>
+      <span class="lbl">avg revenue lift from SEO</span>
+    </div>
+  </div>
+
+  <div id="pillars"></div>
+
+  <div class="actions">
+    <h3>✅ This week's quick wins</h3>
+    <div id="checklist"></div>
+    <div class="cta-row">
+      <p>Want to go deeper on any area? Copy a prompt below and paste into Claude:</p>
+      <a class="cta-btn" href="https://claude.ai/new" target="_blank">Open Claude &rarr;</a>
+    </div>
+  </div>
+
+  <div class="footer">Built with Claude &nbsp;·&nbsp; Customize this guide for your business</div>
+</div>
+
+<script>
+const pillars = [
+  {
+    icon: "🔍", bg: "#e6f1fb", numBg: "#b5d4f4", numColor: "#0c447c",
+    title: "Search & discoverability",
+    sub: "Get found before competitors",
+    tips: [
+      { n:"01", h:"Optimise product titles & descriptions for search", p:"Use the exact words your customers type. Include brand, material, size, and use-case. Google Search Console (free) shows what queries bring people to your site.", e:"quick" },
+      { n:"02", h:"Run Google Shopping ads with a small test budget", p:"Even ₹500/day drives immediate traffic. Start with your 5 best-selling products. Shopping ads show your photo, price, and store — high-intent clicks.", e:"medium" },
+      { n:"03", h:"Create a blog targeting buyer-intent keywords", p:"Posts like 'best [product] for [use case]' attract shoppers researching before they buy. One quality post a week compounds over time.", e:"invest" },
+    ]
+  },
+  {
+    icon: "📱", bg: "#fbeaf0", numBg: "#f4c0d1", numColor: "#993556",
+    title: "Social media & content",
+    sub: "Turn scrollers into shoppers",
+    tips: [
+      { n:"04", h:"Post product videos on Instagram Reels & YouTube Shorts", p:"Short-form video gets 3–5× more reach than static posts. Show your product in use, not just on a white background. Authenticity beats polish.", e:"quick" },
+      { n:"05", h:"Partner with micro-influencers (5k–50k followers)", p:"Micro-influencers in your niche have highly engaged, trust-based audiences. Offer free product or a commission deal. Relevance matters more than follower count.", e:"medium" },
+      { n:"06", h:"Run a referral giveaway", p:"'Tag a friend to win' posts grow your reach exponentially. Offer a discount to both the winner and the new follower to convert them faster.", e:"quick" },
+    ]
+  },
+  {
+    icon: "⭐", bg: "#faeeda", numBg: "#fac775", numColor: "#854f0b",
+    title: "Trust & social proof",
+    sub: "Turn browsers into believers",
+    tips: [
+      { n:"07", h:"Add customer reviews prominently on every product page", p:"83% of shoppers check reviews before buying. Use Judge.me or Loox on Shopify. Send automated post-purchase emails asking for feedback.", e:"quick" },
+      { n:"08", h:"Display trust badges and secure payment icons", p:"Show 'Secure checkout', 'Easy returns', and payment logos above the fold. Uncertainty is the silent killer of conversions — reduce it visually.", e:"quick" },
+      { n:"09", h:"Feature user-generated content (UGC)", p:"Repost customer photos using your products. Real photos convert better than studio shots and cost nothing to produce.", e:"quick" },
+    ]
+  },
+  {
+    icon: "📧", bg: "#e1f5ee", numBg: "#9fe1cb", numColor: "#0f6e56",
+    title: "Email & retention as acquisition",
+    sub: "Your buyers are your best marketers",
+    tips: [
+      { n:"10", h:"Build a welcome series for new subscribers", p:"Offer 10–15% off to capture emails. Then send 3 emails over a week: brand story → bestsellers → customer reviews. This converts people not yet ready to buy.", e:"medium" },
+      { n:"11", h:"Create a referral programme", p:"Give existing customers a unique link. When someone they refer buys, both get rewarded. Tools like ReferralCandy or Viral Loops make this easy.", e:"invest" },
+      { n:"12", h:"Re-engage lapsed visitors with retargeting ads", p:"Use Meta or Google retargeting to reach people who visited your site but didn't buy. They already know you — these clicks are cheaper and convert better.", e:"medium" },
+    ]
+  },
+  {
+    icon: "⚡", bg: "#eeedfe", numBg: "#cec bf6", numColor: "#534ab7",
+    title: "Site experience & conversion",
+    sub: "More visitors become customers",
+    tips: [
+      { n:"13", h:"Fix your mobile site speed", p:"53% of mobile users abandon a site that takes more than 3 seconds to load. Run your URL through Google PageSpeed Insights (free) and fix the top 3 issues.", e:"quick" },
+      { n:"14", h:"Add a WhatsApp chat button", p:"Pre-purchase questions kill sales. A simple WhatsApp link (wa.me/your-number) lets customers ask before they leave. This alone can lift conversions 10–20%.", e:"quick" },
+      { n:"15", h:"Test a discount pop-up for first-time visitors", p:"An exit-intent pop-up offering 10% off captures shoppers about to leave. Use Privy or OptiMonk. Even a 2% capture rate grows your list significantly.", e:"medium" },
+    ]
+  }
+];
+
+const effortLabel = { quick:"⚡ Quick win", medium:"⏱ 1–2 weeks", invest:"📈 Long-term" };
+
+const container = document.getElementById("pillars");
+
+pillars.forEach((p, i) => {
+  const el = document.createElement("div");
+  el.className = "pillar";
+  el.innerHTML = `
+    <div class="pillar-header" onclick="toggle(${i})" role="button" aria-expanded="${i===0}" aria-controls="body${i}">
+      <div class="pillar-icon" style="background:${p.bg}">${p.icon}</div>
+      <div class="pillar-meta">
+        <h3>${p.title}</h3>
+        <span>${p.sub}</span>
+      </div>
+      <span class="chevron ${i===0?'open':''}" id="chev${i}" aria-hidden="true">▾</span>
+    </div>
+    <div class="pillar-body ${i===0?'open':''}" id="body${i}">
+      ${p.tips.map(t => `
+        <div class="tip">
+          <div class="tip-num" style="background:${p.numBg};color:${p.numColor}">${t.n}</div>
+          <div class="tip-content">
+            <h4>${t.h}</h4>
+            <p>${t.p}</p>
+            <span class="effort ${t.e}">${effortLabel[t.e]}</span>
+          </div>
+        </div>`).join("")}
+    </div>`;
+  container.appendChild(el);
+});
+
+function toggle(i) {
+  const body = document.getElementById("body" + i);
+  const chev = document.getElementById("chev" + i);
+  const header = chev.closest(".pillar-header");
+  const isOpen = body.classList.contains("open");
+  body.classList.toggle("open", !isOpen);
+  chev.classList.toggle("open", !isOpen);
+  header.setAttribute("aria-expanded", String(!isOpen));
+}
+
+const quickWins = [
+  "Add customer reviews to your top 5 product pages",
+  "Check your mobile load speed on Google PageSpeed Insights",
+  "Add a WhatsApp chat button to your site",
+  "Post one short product video on Instagram Reels",
+  "Set up a 10% welcome discount for email sign-ups",
+];
+
+const cl = document.getElementById("checklist");
+quickWins.forEach((w, i) => {
+  const d = document.createElement("div");
+  d.className = "action-item";
+  d.innerHTML = `<input type="checkbox" id="chk${i}"><label for="chk${i}">${w}</label>`;
+  cl.appendChild(d);
+});
+</script>
+</body>
+</html>
